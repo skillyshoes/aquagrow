@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#071b20">
+  <title>AquaGrow | Smart Greenhouse</title>
+  <style>
+    :root {
+      --bg: #061619;
+      --panel: rgba(13, 39, 43, .82);
+      --panel2: rgba(17, 54, 56, .72);
+      --green: #5df2b1;
+      --cyan: #53dff2;
+      --text: #eafff7;
+      --muted: #a6c8c0;
+      --line: rgba(93, 242, 177, .2);
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0; color: var(--text); background:
+        radial-gradient(ellipse at 15% 5%, rgba(25, 130, 112, .22), transparent 35%),
+        radial-gradient(ellipse at 90% 25%, rgba(37, 135, 157, .16), transparent 32%),
+        var(--bg);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+      line-height: 1.65;
+    }
+    a { color: inherit; text-decoration: none; }
+    .wrap { width: min(1100px, 90%); margin: auto; }
+    header {
+      position: sticky; top: 0; z-index: 10; backdrop-filter: blur(16px);
+      background: rgba(6, 22, 25, .82); border-bottom: 1px solid var(--line);
+    }
+    nav { display: flex; align-items: center; justify-content: space-between; gap: 18px; padding: 15px 0; }
+    .brand { font-weight: 800; letter-spacing: .5px; color: var(--green); font-size: 1.15rem; }
+    .navlinks { display: flex; flex-wrap: wrap; gap: 17px; color: var(--muted); font-size: .9rem; }
+    .navlinks a:hover { color: var(--green); }
+    .hero { padding: 92px 0 76px; display: grid; grid-template-columns: 1.25fr .75fr; gap: 42px; align-items: center; }
+    .eyebrow { color: var(--cyan); text-transform: uppercase; letter-spacing: 3px; font-size: .75rem; font-weight: 800; }
+    h1 { font-size: clamp(2.6rem, 7vw, 5.2rem); line-height: 1.02; margin: 14px 0 20px; letter-spacing: -2px; }
+    h1 span { color: var(--green); text-shadow: 0 0 28px rgba(93,242,177,.24); }
+    .lead { color: var(--muted); font-size: 1.1rem; max-width: 620px; }
+    .actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+    .btn { display: inline-block; border-radius: 999px; padding: 11px 19px; font-weight: 750; border: 1px solid var(--green); }
+    .btn.primary { color: #052018; background: var(--green); }
+    .btn.secondary { color: var(--green); background: transparent; }
+    .orb-card, .card, .stat { border: 1px solid var(--line); background: var(--panel); border-radius: 22px; box-shadow: 0 18px 60px rgba(0,0,0,.18); }
+    .orb-card { padding: 26px; text-align: center; position: relative; overflow: hidden; }
+    .orb { width: 190px; height: 190px; margin: 12px auto 18px; border-radius: 50%; display: grid; place-items: center; font-size: 5rem;
+      background: radial-gradient(circle at 35% 30%, #c7ffe5, #43dba0 35%, #087b65 70%, #063d3a);
+      box-shadow: 0 0 35px rgba(93,242,177,.28), inset -15px -18px 30px rgba(0,0,0,.28); }
+    .orb-card p { color: var(--muted); margin: 0; }
+    section { padding: 55px 0; }
+    .section-title { font-size: clamp(1.8rem, 4vw, 2.6rem); margin: 0 0 12px; }
+    .section-intro { color: var(--muted); max-width: 720px; margin: 0 0 26px; }
+    .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .card { padding: 22px; }
+    .card .icon { font-size: 1.7rem; }
+    .card h3 { margin: 8px 0; color: var(--green); }
+    .card p, .card li { color: var(--muted); }
+    .two { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+    .steps { counter-reset: step; list-style: none; padding: 0; margin: 0; }
+    .steps li { counter-increment: step; display: flex; gap: 14px; margin: 15px 0; color: var(--muted); }
+    .steps li::before { content: counter(step, decimal-leading-zero); color: var(--green); font-weight: 850; }
+    .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 18px; }
+    .stat { padding: 18px; text-align: center; }
+    .stat strong { display: block; color: var(--cyan); font-size: 1.35rem; }
+    .stat span { color: var(--muted); font-size: .85rem; }
+    .bio { border-color: rgba(83,223,242,.28); background: linear-gradient(135deg, rgba(13,39,43,.95), rgba(13,55,61,.72)); }
+    .bio-tag { display: inline-block; border: 1px solid rgba(83,223,242,.35); color: var(--cyan); border-radius: 999px; padding: 4px 11px; font-size: .78rem; }
+    .sdg-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+    .sdg-card { overflow: hidden; border: 1px solid var(--line); border-radius: 16px; background: rgba(13,39,43,.7); }
+    .sdg-card img { display: block; width: 100%; aspect-ratio: 1 / 1; object-fit: contain; background: #fff; }
+    .sdg-card p { padding: 0 13px 12px; color: var(--muted); font-size: .9rem; }
+    .sdg-note { color: var(--muted); font-size: .76rem; margin-top: 14px; }
+    .creator-name { color: var(--cyan); font-size: 1.35rem; font-weight: 850; margin: 12px 0 0; }
+    .creator-class { display: inline-block; margin-top: 6px; color: var(--green); font-weight: 750; letter-spacing: .5px; }
+    footer { border-top: 1px solid var(--line); padding: 25px 0; color: var(--muted); text-align: center; font-size: .9rem; }
+    @media (max-width: 760px) {
+      .hero, .two { grid-template-columns: 1fr; }
+      .hero { padding-top: 60px; }
+      .grid { grid-template-columns: 1fr; }
+      .stats { grid-template-columns: 1fr; }
+      nav { align-items: flex-start; flex-direction: column; }
+      .navlinks { gap: 12px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <nav class="wrap">
+      <a class="brand" href="#home">🌱 AQUAGROW</a>
+      <div class="navlinks">
+        <a href="#about">About</a><a href="#working">How it works</a><a href="#technology">Technology</a>
+        <a href="#benefits">Benefits</a><a href="#creator">About the creator</a>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <div class="wrap hero" id="home">
+      <div>
+        <div class="eyebrow">Smart greenhouse • Water-wise future</div>
+        <h1>Grow smarter.<br><span>Save water.</span></h1>
+        <p class="lead">AquaGrow is a smart greenhouse system that monitors plant conditions and helps water plants when the soil needs it.</p>
+        <div class="actions">
+          <a class="btn primary" href="#working">Explore the system</a>
+          <a class="btn secondary" href="#technology">Discover the technology</a>
+        </div>
+      </div>
+      <div class="orb-card">
+        <div class="orb">🌿</div>
+        <h2>Smarter plant care starts here</h2>
+        <p>Sensor-based monitoring • Automatic watering • Mobile control</p>
+      </div>
+    </div>
+
+    <section id="about">
+      <div class="wrap">
+        <div class="eyebrow">01 / The idea</div>
+        <h2 class="section-title">Why AquaGrow?</h2>
+        <p class="section-intro">Plants need the right amount of water. Too much or too little can affect their growth, while checking and watering them manually takes time. AquaGrow uses sensors and automation to make plant care smarter and more water-conscious.</p>
+        <div class="grid">
+          <article class="card"><div class="icon">💧</div><h3>The challenge</h3><p>Manual watering can be inconsistent, and plants may not always receive the amount of water they need.</p></article>
+          <article class="card"><div class="icon">🧠</div><h3>The solution</h3><p>A microcontroller checks sensor readings and controls a small pump according to soil moisture.</p></article>
+          <article class="card"><div class="icon">📱</div><h3>Connected care</h3><p>A mobile app displays live readings and includes a button for manual watering.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section id="working">
+      <div class="wrap">
+        <div class="eyebrow">02 / The process</div>
+        <h2 class="section-title">How does it work?</h2>
+        <p class="section-intro">AquaGrow brings sensing, decision-making and watering together in one simple cycle.</p>
+        <div class="two">
+          <div class="card">
+            <ol class="steps">
+              <li>The soil moisture sensor measures the moisture level in the soil.</li>
+              <li>The DHT11 sensor measures the surrounding air temperature and humidity.</li>
+              <li>The ESP32 reads and processes the sensor information.</li>
+              <li>When the soil is too dry, the ESP32 activates the relay to run the mini water pump for a controlled cycle.</li>
+              <li>The mobile app displays the readings and lets the user request watering manually.</li>
+            </ol>
+          </div>
+          <div class="card">
+            <h3>System at a glance</h3>
+            <div class="stats">
+              <div class="stat"><strong>ESP32</strong><span>Main controller</span></div>
+              <div class="stat"><strong>3 sensors/values</strong><span>Soil, temperature, humidity</span></div>
+              <div class="stat"><strong>Mobile app</strong><span>Monitoring and manual control</span></div>
+            </div>
+            <p>Sensor thresholds are calibrated for the soil and setup being used. The displayed readings are provided by the actual device when it is running.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="technology">
+      <div class="wrap">
+        <div class="eyebrow">03 / The technology</div>
+        <h2 class="section-title">What powers AquaGrow?</h2>
+        <p class="section-intro">The project combines affordable electronic components with a custom mobile interface.</p>
+        <div class="grid">
+          <article class="card"><div class="icon">🔌</div><h3>ESP32 DevKit</h3><p>The main microcontroller. It reads the sensors, makes watering decisions and communicates over Wi-Fi.</p></article>
+          <article class="card"><div class="icon">🌱</div><h3>FC-28 soil sensor</h3><p>Measures soil moisture so the system can identify when the soil is getting dry.</p></article>
+          <article class="card"><div class="icon">🌡️</div><h3>DHT11 sensor</h3><p>Measures the air temperature and humidity around the plant.</p></article>
+          <article class="card"><div class="icon">⚡</div><h3>Relay module</h3><p>Acts as an electrically controlled switch for the mini water pump.</p></article>
+          <article class="card"><div class="icon">🚿</div><h3>5V mini pump</h3><p>Moves water to the plant during an automatic or manually requested watering cycle.</p></article>
+          <article class="card"><div class="icon">📲</div><h3>MIT App Inventor</h3><p>The mobile app shows temperature, humidity and soil readings, along with plant status and a Water Now button.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section id="benefits">
+      <div class="wrap">
+        <div class="eyebrow">04 / The impact</div>
+        <h2 class="section-title">A small system with a greener goal</h2>
+        <div class="two">
+          <div class="card">
+            <h3>Key benefits</h3>
+            <ul>
+              <li>Helps avoid unnecessary watering.</li>
+              <li>Reduces the need for constant manual monitoring.</li>
+              <li>Provides useful information about plant conditions.</li>
+              <li>Demonstrates how technology can support responsible water use.</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3>Connected to the UN Sustainable Development Goals</h3>
+            <div class="sdg-grid">
+              <article class="sdg-card">
+                <img src="https://open-sdg.github.io/translations-un-sdg/assets/img/goals/en/6.png" alt="United Nations Sustainable Development Goal 6: Clean Water and Sanitation">
+                <p><strong>SDG 6</strong><br>Clean Water and Sanitation</p>
+              </article>
+              <article class="sdg-card">
+                <img src="https://open-sdg.github.io/translations-un-sdg/assets/img/goals/en/12.png" alt="United Nations Sustainable Development Goal 12: Responsible Consumption and Production">
+                <p><strong>SDG 12</strong><br>Responsible Consumption and Production</p>
+              </article>
+              <article class="sdg-card">
+                <img src="https://open-sdg.github.io/translations-un-sdg/assets/img/goals/en/13.png" alt="United Nations Sustainable Development Goal 13: Climate Action">
+                <p><strong>SDG 13</strong><br>Climate Action</p>
+              </article>
+            </div>
+            <p>By encouraging more thoughtful water use, AquaGrow connects with global sustainability goals.</p>
+            <p class="sdg-note">SDG icons: United Nations Sustainable Development Goals. <a href="https://www.un.org/sustainabledevelopment" target="_blank" rel="noopener noreferrer" style="color:var(--cyan);text-decoration:underline;">Learn more</a>. This website is an independent student project and is not an official UN publication.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="future">
+      <div class="wrap">
+        <div class="eyebrow">05 / What's next</div>
+        <h2 class="section-title">Future possibilities</h2>
+        <div class="card">
+          <p>Future versions of AquaGrow could include data logging, weather-aware watering, additional plant sensors and solar power. These upgrades could make the system more informative and energy-conscious.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="creator">
+      <div class="wrap">
+        <div class="eyebrow">06 / The creator</div>
+        <h2 class="section-title">Meet the young innovator</h2>
+        <div class="card bio">
+          <span class="bio-tag">Student • Science & technology enthusiast</span>
+          <p class="creator-name">Madhvesha Srinath</p>
+          <span class="creator-class">CLASS 7H</span>
+          <h3>A little about me</h3>
+          <p>I am a Grade 7 student who enjoys exploring science, technology and hands-on projects. I like learning how ideas can be turned into useful inventions. I created AquaGrow to explore how sensors, coding and automation can work together to support smarter plant care and responsible water use.</p>
+          <p>Through this project, I have developed my skills in electronics, programming, problem-solving and creative thinking.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap">🌱 AquaGrow Smart Greenhouse • Built for a smarter, greener future</div>
+  </footer>
+</body>
+</html>
